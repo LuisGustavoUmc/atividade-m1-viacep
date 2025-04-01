@@ -6,6 +6,7 @@ import com.example.crud.domain.product.ProductRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -20,6 +21,7 @@ public class ViaCepService {
     private final ObjectMapper objectMapper;
     private final ProductRepository productRepository;
 
+    @Autowired
     public ViaCepService(RestTemplate restTemplate, ObjectMapper objectMapper, ProductRepository productRepository) {
         this.restTemplate = restTemplate;
         this.objectMapper = objectMapper;
