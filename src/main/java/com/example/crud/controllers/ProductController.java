@@ -5,6 +5,7 @@ import com.example.crud.domain.product.ProductRepository;
 import com.example.crud.domain.category.RequestCategory;
 import com.example.crud.domain.product.RequestProduct;
 import com.example.crud.service.AddressSearch;
+import com.example.crud.service.ViaCepService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +25,13 @@ public class ProductController {
     @Autowired
     private ProductRepository repository;
     private final AddressSearch addressSearch;
+    private final ViaCepService viaCepService;
 
     @Autowired
-    public ProductController(ProductRepository repository, AddressSearch addressSearch) {
+    public ProductController(ProductRepository repository, AddressSearch addressSearch, ViaCepService viaCepService) {
         this.repository = repository;
         this.addressSearch = addressSearch;
+        this.viaCepService = viaCepService;
     }
 
     @GetMapping
@@ -41,6 +44,12 @@ public class ProductController {
     public ResponseEntity verifyAvailability(@RequestParam String state, @RequestParam String city, @RequestParam String street){
         String cep = addressSearch.searchAddress(state, city, street);
         return ResponseEntity.ok(cep);
+    }
+
+    @GetMapping("/checkCityMatch")
+    public ResponseEntity<Boolean> checkCityMatch(@RequestParam String cep, @RequestParam String productId) {
+        boolean isMatching = viaCepService.isCityMatchingDistributionCenter(cep, productId);
+        return ResponseEntity.ok(isMatching);
     }
 
     @GetMapping("/endpoint1") //products from only one category
