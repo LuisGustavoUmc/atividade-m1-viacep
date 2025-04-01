@@ -24,11 +24,13 @@ public class Product {
 
     private String category;
 
+    private String distributionCenter;
 
     public Product(RequestProduct requestProduct){
         this.name = requestProduct.name();
         this.price = requestProduct.price();
         this.category = requestProduct.category();
         this.active = true;
+        this.distributionCenter = requestProduct.distributionCenter();
     }
 }

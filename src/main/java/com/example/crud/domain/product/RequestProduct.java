@@ -13,6 +13,8 @@ public record RequestProduct(
         @NotNull
         Integer price,
         @NotBlank
-        String category
+        String category,
+        @NotBlank
+        String distributionCenter
 ) {
 }
